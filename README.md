@@ -28,3 +28,10 @@ right after
 	fn_gearMenuChecks = compile preprocessFileLineNumbers ""+YOURPATH+"\fn_gearMenuChecks.sqf";
 ```
 Done
+
+#### Battleye Filter
+
+Don't forget to add this to your filters
+```
+	!="PVDZE_dupe"
+```
