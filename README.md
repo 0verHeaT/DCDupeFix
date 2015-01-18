@@ -4,7 +4,8 @@ This is a possible way to prevent players duping their gear through disconnectio
 This script basically checks whether a player is connected to the session while he is inside his gear menu.
 If the connection is interrupted the server clears possible duped gear out of the storage unit where the selected player lost his connection.
 
-NOTE: This is experimental and can contain some bugs. If you notice any issues report them to me.
+NOTE: This is experimental and can contain some bugs. If you notice any issues report them to me. This script is recommended for advanced server owners only, because it can cause huge errors if it is not installed correctly!
+
 
 ##### Installation
 
