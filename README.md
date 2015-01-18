@@ -10,9 +10,9 @@ NOTE: This is experimental and can contain some bugs. If you notice any issues r
 
 1.  Copy the server_preventDupe.sqf to \z\addons\dayz_server\init\
 2.  In your server_function.sqf put this line at the top
-
+´´´
       [] execVM "\z\addons\dayz_server\init\server_preventDupe.sqf";
-  
+´´´
 3.  Open your init.sqf in your mission file and add this line
 
       "PlayerCheckDupe" addPublicVariableEventHandler {
