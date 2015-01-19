@@ -55,10 +55,10 @@ if((locked _cTarget) && _isOk && (((vehicle player) distance _cTarget) < 12)) th
 	uiSleep 0.2;
 	PVDZE_dupe = [player,DupeObject,"dupeCheck"];
 	publicVariableServer "PVDZE_dupe";
-	uiSleep 1.2;
+	uiSleep 1.6;
 	PVDZE_dupe = [player,"","val"];
 	publicVariableServer "PVDZE_dupe";
-	uiSleep 0.4;
+	uiSleep 2;
 	// This would not work on populated servers
 	//uiSleep 1.4;
 	//if (DupeObject getVariable [PlayervarName,true]) then {(findDisplay 46) closeDisplay 0;};
