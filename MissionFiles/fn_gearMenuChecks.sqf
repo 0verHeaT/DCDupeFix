@@ -22,6 +22,8 @@ if((locked _cTarget) && _isOk && (((vehicle player) distance _cTarget) < 12)) th
 [_cTarget] spawn {
 	private ["_transportMax","_obj"];
 	_obj = _this select 0;
+	if !(canbuild) exitWith {};
+	if ((player distance _obj) > 10) exitWith {};
 	if (vehicle player != player || isPlayer _obj) exitWith {};
 
 	_transportMax = (getNumber (configFile >> "CfgVehicles" >> (typeof _obj) >> "transportMaxWeapons") + getNumber (configFile >> "CfgVehicles" >> (typeof _obj) >> "transportMaxMagazines") + getNumber (configFile >> "CfgVehicles" >> (typeof _obj) >> "transportMaxBackpacks"));
@@ -42,8 +44,8 @@ if((locked _cTarget) && _isOk && (((vehicle player) distance _cTarget) < 12)) th
 	DupeObject = _obj;
 	PlayervarName = "DupeVar_" + (getPlayerUID player);
 	if (DupeObject getVariable [PlayervarName,false]) then {
-		PVDZE_deb = [player,DupeObject,"dcdupe"];
-		publicVariableServer "PVDZE_deb";
+		PVDZE_dupe = [player,DupeObject,"dcdupe"];
+		publicVariableServer "PVDZE_dupe";
 	};
 	uiSleep 0.2;
 	DupeObject setVariable [PlayervarName,true,true];
@@ -51,13 +53,15 @@ if((locked _cTarget) && _isOk && (((vehicle player) distance _cTarget) < 12)) th
 	waitUntil {str(FindDisplay 106) == "No Display"};
 
 	uiSleep 0.2;
-	PVDZE_deb = [player,DupeObject,"dupeCheck"];
-	publicVariableServer "PVDZE_deb";
+	PVDZE_dupe = [player,DupeObject,"dupeCheck"];
+	publicVariableServer "PVDZE_dupe";
 	uiSleep 1.2;
-	PVDZE_deb = [player,"","dupeVar"];
-	publicVariableServer "PVDZE_deb";
-	uiSleep 1.4;
-	if (DupeObject getVariable [PlayervarName,true]) then {(findDisplay 46) closeDisplay 0;};
+	PVDZE_dupe = [player,"","val"];
+	publicVariableServer "PVDZE_dupe";
+	uiSleep 0.4;
+	// This would not work on populated servers
+	//uiSleep 1.4;
+	//if (DupeObject getVariable [PlayervarName,true]) then {(findDisplay 46) closeDisplay 0;};
 	GearDisplay = false;
 	DupeObject = objNull;
 };
