@@ -20,10 +20,11 @@ if((locked _cTarget) && _isOk && (((vehicle player) distance _cTarget) < 12)) th
 };
 
 [_cTarget] spawn {
-	private ["_transportMax","_obj"];
+	private ["_transportMax","_obj","_maxdis"];
 	_obj = _this select 0;
 	if !(canbuild) exitWith {};
-	if ((player distance _obj) > 10) exitWith {};
+	if (_obj isKindOf "AllVehicles") then {_maxdis = 10;} else {_maxdis = 5;};
+	if ((player distance _obj) > _maxdis) exitWith {};
 	if (vehicle player != player || isPlayer _obj) exitWith {};
 
 	_transportMax = (getNumber (configFile >> "CfgVehicles" >> (typeof _obj) >> "transportMaxWeapons") + getNumber (configFile >> "CfgVehicles" >> (typeof _obj) >> "transportMaxMagazines") + getNumber (configFile >> "CfgVehicles" >> (typeof _obj) >> "transportMaxBackpacks"));
@@ -35,31 +36,34 @@ if((locked _cTarget) && _isOk && (((vehicle player) distance _cTarget) < 12)) th
 	if (GearDisplay/* && _obj == DupeObject*/) exitWith {
 		waitUntil {str(FindDisplay 106) == "Display #106"};
 		(FindDisplay 106) closeDisplay 0;
-		cutText["\n\nPlease wait a moment to open your gear!","PLAIN DOWN"];
+		cutText["\n\nDupe Protection: Please wait a second to access gear!","PLAIN DOWN"];
 	};
 	
 	waitUntil {str(FindDisplay 106) == "Display #106"};
+	uiSleep 0.5;
+	if (str(FindDisplay 106) == "No Display") exitWith {};
 	
+	if (GearDisplay) exitWith {};
 	GearDisplay = true;
 	DupeObject = _obj;
 	PlayervarName = "DupeVar_" + (getPlayerUID player);
+	uiSleep 0.5;
 	if (DupeObject getVariable [PlayervarName,false]) then {
 		PVDZE_dupe = [player,DupeObject,"dcdupe"];
 		publicVariableServer "PVDZE_dupe";
+		//systemChat format ["<OCG - REMOTE>: %1, Duping is a non-excusable offence! Stop it or you will be banned!",(name _player)];
 	};
 	uiSleep 0.2;
 	DupeObject setVariable [PlayervarName,true,true];
 
 	waitUntil {str(FindDisplay 106) == "No Display"};
 
-	uiSleep 0.2;
 	PVDZE_dupe = [player,DupeObject,"dupeCheck"];
 	publicVariableServer "PVDZE_dupe";
-	uiSleep 1.4;
+	uiSleep 1;
 	PVDZE_dupe = [player,"","val"];
 	publicVariableServer "PVDZE_dupe";
-	uiSleep 1.6;
-	// This would not work on populated servers
+	uiSleep 2;
 	//uiSleep 1.4;
 	//if (DupeObject getVariable [PlayervarName,true]) then {(findDisplay 46) closeDisplay 0;};
 	GearDisplay = false;
